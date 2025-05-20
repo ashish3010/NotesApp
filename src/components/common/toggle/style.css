@@ -1,0 +1,59 @@
+.theme-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-toggle input {
+  display: none;
+}
+
+/* Switch Wrapper */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 66px;
+  height: 36px;
+  background: #ccc;
+  border-radius: 50px;
+  transition: background 0.4s;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 6px;
+}
+
+.switch .icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 4px;
+  transition: left 0.4s ease;
+}
+
+/* Slider */
+.slider {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  background-color: var(--background);
+  border-radius: 50%;
+  top: 4px;
+  left: 4px;
+  transition: transform 0.4s ease;
+  z-index: 1;
+}
+
+.theme-toggle input:checked+.switch .slider {
+  transform: translateX(28px);
+}
+
+.theme-toggle input:checked+.switch .icon {
+  left: 32px;
+}

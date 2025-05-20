@@ -1,0 +1,121 @@
+.create-note {
+  position: relative;
+  background-color: var(--background);
+}
+
+.create-note .MuiInputBase-root::before,
+.create-note .MuiInputBase-root::after {
+  border-bottom: none !important;
+}
+
+.new-note-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.preview {
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    column-gap: var(--m);
+    align-items: flex-start;
+  }
+
+  .edit-icon {
+    width: var(--xl);
+    height: var(--xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--btn-links);
+    border-radius: 100%;
+    cursor: pointer;
+  }
+}
+
+.chip-wrapper {
+  display: flex;
+  gap: var(--s);
+}
+
+.tools-panel {
+  .tools-container {
+    display: flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 2px solid var(--btn-links);
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 40px;
+    height: 40px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .tools-container.expanded {
+    width: 325px;
+  }
+
+  .tools-icons {
+    display: flex;
+    gap: var(--s);
+    align-items: center;
+    margin-left: var(--s);
+    flex-grow: 1;
+
+    .bgColor {
+      background-color: var(--surface);
+    }
+
+    .tools {
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      border-radius: 100%;
+
+      &:hover {
+        background-color: var(--surface);
+      }
+    }
+  }
+
+
+  .color-wrapper {
+    position: absolute;
+    top: -48px;
+    left: 120px;
+    background-color: var(--surface);
+    border: 2px solid var(--border-divider);
+    border-radius: var(--xxs);
+    padding: var(--xs);
+    width: 120px;
+
+    .no-color {
+      padding: 4px;
+      border: 2px solid var(--border-divider);
+      border-radius: var(--xxs);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: var(--s);
+    }
+
+    .color-block {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: var(--s);
+      column-gap: var(--s);
+
+      .color-item {
+        width: var(--base);
+        height: var(--base);
+      }
+    }
+  }
+}
