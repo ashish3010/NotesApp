@@ -1,6 +1,7 @@
 .create-note {
   position: relative;
   background-color: var(--background);
+  overflow: hidden;
 }
 
 .create-note .MuiInputBase-root::before,
@@ -57,7 +58,7 @@
   }
 
   .tools-container.expanded {
-    width: 325px;
+    width: 235px;
   }
 
   .tools-icons {
