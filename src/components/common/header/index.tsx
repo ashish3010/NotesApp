@@ -9,22 +9,30 @@ const Header = () => {
       component="nav"
       sx={{
         backgroundColor: "var(--surface)",
-        display: "flex",
         width: "100%",
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "center",
-        position: "relative",
-        padding: "8px 16px",
       }}
     >
-      <div>
-        <Typography variant="h5" sx={{ color: "var(--text-primary)" }}>
-          Notes
-        </Typography>
-      </div>
-      <div>
-        <ThemeToggle />
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          maxWidth: 1660,
+          margin: "0 auto",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          alignItems: "center",
+          position: "relative",
+          padding: "8px 16px",
+        }}
+      >
+        <div>
+          <Typography variant="h5" sx={{ color: "var(--text-primary)" }}>
+            Notes
+          </Typography>
+        </div>
+        <div>
+          <ThemeToggle />
+        </div>
       </div>
     </AppBar>
   );

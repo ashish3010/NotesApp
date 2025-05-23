@@ -2,19 +2,24 @@ import { create } from "zustand";
 
 export interface NoteState {
   title?: string;
+  id?: string;
   content?: string;
   tags?: string[];
+  lastUpdated?: string;
 }
 
 export interface SavedNoteState {
   noteDetails: NoteState[];
   setNoteDetails: (data: NoteState) => void;
+  onRemoveNote: (id: string) => void;
+  getNotesFromLocalStorage: () => void;
+  clearNotes: () => void;
 }
 
 export interface CreateNoteState {
   isCreateModeOn: boolean;
-  inputData: NoteState;
-  setInputData: (data: NoteState) => void;
+  inputData: NoteState | null;
+  setInputData: (data: NoteState | null) => void;
   setCreateModeOn: (flag: boolean) => void;
 }
 
@@ -28,7 +33,7 @@ export interface PreviewNoteState {
 export const useCreateNote = create<CreateNoteState>((set) => ({
   isCreateModeOn: false,
   inputData: {},
-  setInputData: (data: NoteState) => set({ inputData: data }),
+  setInputData: (data: NoteState | null) => set({ inputData: data }),
   setCreateModeOn: (flag: boolean) => set(() => ({ isCreateModeOn: flag })),
 }));
 
@@ -42,5 +47,53 @@ export const usePreviewNote = create<PreviewNoteState>((set) => ({
 export const useSavedNote = create<SavedNoteState>((set) => ({
   noteDetails: [],
   setNoteDetails: (data: NoteState) =>
-    set((state) => ({ noteDetails: [...state.noteDetails, data] })),
+    set((state) => {
+      const existingNote = state.noteDetails.find(
+        (note) => note.id === data.id
+      );
+      if (existingNote) {
+        const filteredNotes = state.noteDetails.filter(
+          (note) => note.id !== data.id
+        );
+        localStorage.setItem("notes", JSON.stringify([data, ...filteredNotes]));
+        return {
+          noteDetails: [data, ...filteredNotes],
+        };
+      } else {
+        localStorage.setItem(
+          "notes",
+          JSON.stringify([data, ...state.noteDetails])
+        );
+        return {
+          noteDetails: [data, ...state.noteDetails],
+        };
+      }
+    }),
+  onRemoveNote: (id: string) =>
+    set((state) => {
+      const filteredNotes = state.noteDetails.filter((note) => note.id !== id);
+      localStorage.setItem("notes", JSON.stringify(filteredNotes));
+      return {
+        noteDetails: filteredNotes,
+      };
+    }),
+  getNotesFromLocalStorage: () =>
+    set(() => {
+      const notes = localStorage.getItem("notes");
+      if (notes) {
+        return {
+          noteDetails: JSON.parse(notes),
+        };
+      }
+      return {
+        noteDetails: [],
+      };
+    }),
+  clearNotes: () =>
+    set(() => {
+      localStorage.removeItem("notes");
+      return {
+        noteDetails: [],
+      };
+    }),
 }));

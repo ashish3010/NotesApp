@@ -19,6 +19,7 @@ import {
 } from "../../../../store/store";
 import HashtagChips from "./chips";
 import { invokeGemini } from "../../../../utils/gemini";
+import { getCurrentDate } from "@/utils/functions";
 
 const CreateNote = () => {
   const titleRef = useRef<HTMLTextAreaElement | null>(null);
@@ -33,7 +34,9 @@ const CreateNote = () => {
       }) => void;
     }) => state.setNoteDetails
   );
-  const inputData = useCreateNote((state: CreateNoteState) => state.inputData);
+  const { inputData, setInputData } = useCreateNote(
+    (state: CreateNoteState) => state
+  );
   const [currentNote, setCurrentNote] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
@@ -113,16 +116,27 @@ const CreateNote = () => {
     },
   });
 
+  const emptyState = () => {
+    setEditorState(EditorState.createEmpty());
+    setNoteTitle("");
+    setTags([]);
+    setCurrentNote("");
+    setInputData(null);
+  };
+
   const onSaveNote = () => {
     const contentState = editorState.getCurrentContent();
     const html = customConvertToHTML(contentState);
-
+    const date = new Date();
     const noteDetails = {
       title: noteTitle,
+      id: inputData?.id || date.getTime(),
+      lastUpdated: getCurrentDate(),
       tags,
       content: html,
     };
     setNoteDetails(noteDetails);
+    emptyState();
   };
 
   const onSummarise = async () => {
@@ -158,6 +172,16 @@ const CreateNote = () => {
     );
     setEditorState(EditorState.createWithContent(contentState));
   };
+
+  const addFocusOnEditor = () => {
+    if (contentRef.current) {
+      contentRef.current.focus();
+    }
+  };
+
+  useEffect(() => {
+    addFocusOnEditor();
+  }, []);
 
   return (
     <div className="card wh100 create-note">
@@ -200,11 +224,7 @@ const CreateNote = () => {
           style={{
             minHeight: `calc(100% - ${titleHeight + tagsHeight + 88}px)`,
           }}
-          onClick={() =>
-            contentRef.current &&
-            contentRef.current.focus &&
-            contentRef.current.focus()
-          }
+          onClick={addFocusOnEditor}
         >
           <Editor
             ref={contentRef}

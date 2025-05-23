@@ -35,6 +35,17 @@
     border-radius: 100%;
     cursor: pointer;
   }
+
+  .delete-icon {
+    width: var(--xl);
+    height: var(--xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--error);
+    border-radius: 100%;
+    cursor: pointer;
+  }
 }
 
 .chip-wrapper {
@@ -85,7 +96,6 @@
       }
     }
   }
-
 
   .color-wrapper {
     position: absolute;
