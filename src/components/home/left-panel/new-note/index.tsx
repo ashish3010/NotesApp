@@ -1,12 +1,19 @@
 "use client";
 import { Typography, useMediaQuery } from "@mui/material";
 import React from "react";
-import { CreateNoteState, useCreateNote } from "../../../../store/store";
+import {
+  CreateNoteState,
+  useCreateNote,
+  useNavigationFlag,
+} from "../../../../store/store";
 import { useRouter } from "next/navigation";
 
 const NewNote = () => {
   const setCreateModeOn = useCreateNote(
     (state: CreateNoteState) => state.setCreateModeOn
+  );
+  const setNavigationFlag = useNavigationFlag(
+    (state) => state.setNavigationFlag
   );
   const matches = useMediaQuery("(min-width:601px)");
   const router = useRouter();
@@ -14,6 +21,7 @@ const NewNote = () => {
   const onNewNoteClick = () => {
     setCreateModeOn(true);
     if (!matches) {
+      setNavigationFlag(true);
       router.push("/Create_Note");
     }
   };

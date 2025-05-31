@@ -6,6 +6,7 @@ import {
   CreateNoteState,
   PreviewNoteState,
   useCreateNote,
+  useNavigationFlag,
   usePreviewNote,
   useSavedNote,
 } from "../../../../store/store";
@@ -19,6 +20,9 @@ const PreviewNote = () => {
   const { setCreateModeOn, setInputData } = useCreateNote(
     (state: CreateNoteState) => state
   );
+  const setNavigationFlag = useNavigationFlag(
+    (state) => state.setNavigationFlag
+  );
   const { onRemoveNote, noteDetails, clearNotes } = useSavedNote(
     (state) => state
   );
@@ -29,6 +33,7 @@ const PreviewNote = () => {
     setCreateModeOn(true);
     setInputData(noteData);
     if (!matches) {
+      setNavigationFlag(true);
       router.push(`/Create_Note`);
     }
   };
