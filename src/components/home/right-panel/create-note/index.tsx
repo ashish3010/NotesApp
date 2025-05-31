@@ -159,7 +159,7 @@ const CreateNote = () => {
         `summarise this note and return a html string: ${html}`
       );
       const blocksFromHTML = convertFromHTML(
-        res?.replace("```html", "")?.replace("```", "")
+        (res ?? "").replace("```html", "").replace("```", "")
       );
       const contentState = ContentState.createFromBlockArray(
         blocksFromHTML.contentBlocks,
