@@ -2,7 +2,7 @@
   "name": "notesapp",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://ashish3010.github.io/notesapp",
+  "homepage": "http://ashish3010.github.io/NotesApp",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build && next export",
