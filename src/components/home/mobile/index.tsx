@@ -23,16 +23,13 @@ const MobileDashboard = () => {
   );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!matches && !localStorage.getItem("notes")) {
-        setNavigationFlag(true);
-        router.replace("/Create_Note");
-      }
+    if (!matches && !localStorage.getItem("notes")) {
+      setNavigationFlag(true);
+      router.replace("/Create_Note");
     }
   }, [matches, noteDetails, router, setNavigationFlag]);
 
-  if (typeof window !== "undefined" && !localStorage.getItem("notes"))
-    return <CentralLoader />;
+  if (!localStorage.getItem("notes")) return <CentralLoader />;
 
   return (
     <div
