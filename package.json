@@ -2,10 +2,10 @@
   "name": "notesapp",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://ashish3010.github.io/NotesApp",
+  "homepage": "https://ashish3010.github.io/NotesApp",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "predeploy": "npm run build",
