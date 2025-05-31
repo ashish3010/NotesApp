@@ -5,6 +5,7 @@ import HomeComp from "../components/home";
 import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import CentralLoader from "@/components/common/central-loader";
+import "./globals.css";
 
 export default function Home() {
   const matches = useMediaQuery("(min-width:601px)");
