@@ -4,7 +4,7 @@ import Header from "../components/common/header";
 import HomeComp from "../components/home";
 import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import CentralLoader from "@/components/common/central-loader";
+// import CentralLoader from "@/components/common/central-loader";
 
 export default function Home() {
   const matches = useMediaQuery("(min-width:601px)");
@@ -14,9 +14,9 @@ export default function Home() {
     setIsDesktop(matches);
   }, [matches]);
 
-  if (isDesktop === null) {
-    return <CentralLoader />;
-  }
+  // if (isDesktop === null) {
+  //   return <CentralLoader />;
+  // }
 
   return (
     <div>
