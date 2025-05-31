@@ -72,7 +72,7 @@ body {
 }
 
 body {
-  color: var(----text-primary);
+  color: var(--text-primary);
   background: var(--background);
   font-family: "Inter", sans-serif;
 }
