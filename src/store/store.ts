@@ -14,6 +14,13 @@ export interface SavedNoteState {
   onRemoveNote: (id: string) => void;
   getNotesFromLocalStorage: () => void;
   clearNotes: () => void;
+  filteredNotes: NoteState[];
+  setFilteredNotes: (data: NoteState[]) => void;
+}
+
+export interface NavigationFlagState {
+  isNavigationFlag: boolean;
+  setNavigationFlag: (flag: boolean) => void;
 }
 
 export interface CreateNoteState {
@@ -29,6 +36,11 @@ export interface PreviewNoteState {
   setNoteData: (data: NoteState) => void;
   setPreviewModeOn: (flag: boolean) => void;
 }
+
+export const useNavigationFlag = create<NavigationFlagState>((set) => ({
+  isNavigationFlag: false,
+  setNavigationFlag: (flag: boolean) => set(() => ({ isNavigationFlag: flag })),
+}));
 
 export const useCreateNote = create<CreateNoteState>((set) => ({
   isCreateModeOn: false,
@@ -46,6 +58,7 @@ export const usePreviewNote = create<PreviewNoteState>((set) => ({
 
 export const useSavedNote = create<SavedNoteState>((set) => ({
   noteDetails: [],
+  filteredNotes: [],
   setNoteDetails: (data: NoteState) =>
     set((state) => {
       const existingNote = state.noteDetails.find(
@@ -96,4 +109,5 @@ export const useSavedNote = create<SavedNoteState>((set) => ({
         noteDetails: [],
       };
     }),
+  setFilteredNotes: (data: NoteState[]) => set(() => ({ filteredNotes: data })),
 }));

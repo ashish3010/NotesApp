@@ -1,0 +1,15 @@
+.header-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1660px;
+  margin: 0 auto;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding: 8px 16px;
+
+  .notes-title {
+    color: var(--text-primary);
+  }
+}

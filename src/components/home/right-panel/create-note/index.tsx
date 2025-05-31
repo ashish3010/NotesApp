@@ -1,7 +1,6 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
-import { Button, TextareaAutosize } from "@mui/material";
+import { Button, TextareaAutosize, useMediaQuery } from "@mui/material";
 import Tools from "./tools";
 import {
   Editor,
@@ -20,8 +19,12 @@ import {
 import HashtagChips from "./chips";
 import { invokeGemini } from "../../../../utils/gemini";
 import { getCurrentDate } from "@/utils/functions";
+import { useRouter } from "next/navigation";
 
 const CreateNote = () => {
+  const matches = useMediaQuery("(min-width:601px)");
+  const router = useRouter();
+
   const titleRef = useRef<HTMLTextAreaElement | null>(null);
   const tagRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<Editor | null>(null);
@@ -49,6 +52,7 @@ const CreateNote = () => {
   );
 
   const [tags, setTags] = useState<string[]>([]);
+  const [CountFlag, setCountFlag] = useState(false);
 
   const handleKeyCommand = (command: string): "handled" | "not-handled" => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -60,25 +64,28 @@ const CreateNote = () => {
   };
 
   useEffect(() => {
-    if (inputData?.content) {
-      try {
+    if (inputData) {
+      if (inputData.content) {
         const blocksFromHTML = convertFromHTML(inputData.content);
         const contentState = ContentState.createFromBlockArray(
           blocksFromHTML.contentBlocks,
           blocksFromHTML.entityMap
         );
+        if (!CountFlag) {
+          setCountFlag(!CountFlag);
+        }
         setEditorState(EditorState.createWithContent(contentState));
-      } catch (error) {
-        console.error("Failed to parse content", error);
+      } else {
+        setEditorState(EditorState.createEmpty());
       }
+      setNoteTitle(inputData.title || "");
+      setTags(inputData.tags || []);
+    } else {
+      setEditorState(EditorState.createEmpty());
+      setNoteTitle("");
+      setTags([]);
     }
-    if (inputData?.title) {
-      setNoteTitle(inputData.title);
-    }
-    if (inputData?.tags) {
-      setTags(inputData.tags);
-    }
-  }, [inputData]);
+  }, [inputData, CountFlag]);
 
   useEffect(() => {
     if (!titleRef.current) return;
@@ -137,6 +144,9 @@ const CreateNote = () => {
     };
     setNoteDetails(noteDetails);
     emptyState();
+    if (!matches) {
+      router.back();
+    }
   };
 
   const onSummarise = async () => {

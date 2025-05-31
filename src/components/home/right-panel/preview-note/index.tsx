@@ -1,4 +1,5 @@
-import { Chip, Tooltip, Typography } from "@mui/material";
+"use client";
+import { Chip, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -10,6 +11,7 @@ import {
 } from "../../../../store/store";
 import { parseHTML } from "../../../../utils/functions";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useRouter } from "next/navigation";
 
 const PreviewNote = () => {
   const noteData = usePreviewNote((state: PreviewNoteState) => state.noteData);
@@ -20,10 +22,15 @@ const PreviewNote = () => {
   const { onRemoveNote, noteDetails, clearNotes } = useSavedNote(
     (state) => state
   );
+  const matches = useMediaQuery("(min-width:601px)");
+  const router = useRouter();
 
   const onEditClick = () => {
     setCreateModeOn(true);
     setInputData(noteData);
+    if (!matches) {
+      router.push(`/Create_Note`);
+    }
   };
 
   const onDeleteNote = () => {
@@ -32,6 +39,9 @@ const PreviewNote = () => {
     setInputData(null);
     if (noteDetails.length === 1) {
       clearNotes();
+    }
+    if (!matches) {
+      router.back();
     }
   };
 

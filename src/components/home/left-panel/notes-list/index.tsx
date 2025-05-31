@@ -1,6 +1,6 @@
 "use client";
-import { Typography } from "@mui/material";
-import React from "react";
+import { Typography, useMediaQuery } from "@mui/material";
+import React, { useEffect } from "react";
 import ChipsRow from "./chips-row";
 import {
   CreateNoteState,
@@ -12,10 +12,14 @@ import {
   useSavedNote,
 } from "../../../../store/store";
 import { parseHTML } from "../../../../utils/functions";
+import { useRouter } from "next/navigation";
 
 const NotesList = () => {
-  const noteDetails = useSavedNote(
-    (state: SavedNoteState) => state.noteDetails
+  const matches = useMediaQuery("(min-width:601px)");
+  const router = useRouter();
+
+  const { noteDetails, filteredNotes, getNotesFromLocalStorage } = useSavedNote(
+    (state: SavedNoteState) => state
   );
   const { setPreviewModeOn, setNoteData } = usePreviewNote(
     (state: PreviewNoteState) => state
@@ -24,17 +28,28 @@ const NotesList = () => {
     (state: CreateNoteState) => state.setCreateModeOn
   );
 
+  useEffect(() => {
+    getNotesFromLocalStorage();
+  }, [getNotesFromLocalStorage]);
+
   const onNoteClick = (item: NoteState) => {
     setCreateModeOn(false);
     setPreviewModeOn(true);
     setNoteData(item);
+    if (!matches) {
+      router.push("/Preview_Note");
+    }
   };
+
+  const noteDetailsToDisplay = filteredNotes?.length
+    ? filteredNotes
+    : noteDetails;
 
   return (
     <div className="notes-list-container">
       <div className="notes-list">
-        {!!noteDetails?.length &&
-          noteDetails?.map((item) => (
+        {!!noteDetailsToDisplay?.length &&
+          noteDetailsToDisplay?.map((item) => (
             <div
               key={item?.title}
               className="list-item"

@@ -1,20 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import "./style.css";
 import LeftPanel from "./left-panel";
 import RightPanel from "./right-panel";
 import { Divider } from "@mui/material";
-import { useSavedNote } from "@/store/store";
 
 const HomeComp = () => {
-  const getNotesFromLocalStorage = useSavedNote(
-    (state) => state.getNotesFromLocalStorage
-  );
-
-  useEffect(() => {
-    getNotesFromLocalStorage();
-  }, [getNotesFromLocalStorage]);
-
   return (
     <div className="wrapper">
       <div className="card card-shadow card-wrapper">

@@ -17,6 +17,18 @@ const HashtagChips: React.FC<HashtagChipsProps> = ({
     setInput(e.target.value);
   };
 
+  const handleInputBlur = () => {
+    const tag = input.trim().toUpperCase();
+    if (
+      tag.length > 0 &&
+      !hashtags.includes(tag) &&
+      hashtags.length < MAX_HASHTAGS
+    ) {
+      setHashtags([...hashtags, tag]);
+      setInput("");
+    }
+  };
+
   const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (
       (e.key === " " || e.key === "Spacebar" || e.code === "Space") &&
@@ -80,6 +92,7 @@ const HashtagChips: React.FC<HashtagChipsProps> = ({
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
           placeholder="#hashtag"
+          onBlur={handleInputBlur}
           variant="standard"
           inputProps={{ maxLength: 30 }}
           sx={{ minWidth: 100 }}
