@@ -35,29 +35,6 @@ html.light {
   --xl: 48px;
   --xxl: 64px;
   --huge: 80px;
-
-  --background: #faf3e0;
-  --surface: #ffffff;
-  --text-primary: #2c2c2c;
-  --text-secondary: #5e5e5e;
-  --btn-links: #ff7f50;
-  --tags-highlights: #e6b800;
-  --hover: #e76f51;
-  --border-divider: #d6d6d6;
-  --error: #d64545;
-  --warning: #ffa500;
-  --black: #000000;
-  --white: #ffffff;
-
-  --highlight-transparent: transprent;
-  --highlight-yellow: #ffff00;
-  --highlight-cyan: #00ffff;
-  --highlight-green: #90ee90;
-  --highlight-pink: #ff69b4;
-  --highlight-orange: #ffa500;
-  --highlight-light-blue: #add8e6;
-  --highlight-lavender: #e6e6fa;
-  --highlight-light-green: #98fb98;
 }
 
 html.dark {
